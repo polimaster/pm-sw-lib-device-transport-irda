@@ -25,6 +25,9 @@ jobs:
           echo "src=src/Polimaster.Device.Transport.IrDA/Polimaster.Device.Transport.Win.IrDA" >> "$GITHUB_ENV"
       - name: Build
         run: dotnet build "$src" -c Release -p:AssemblyVersion="$tag" -p:Version="$tag"
+        env:
+          # see https://github.com/actions/setup-dotnet/issues/543
+          NuGetPackageSourceCredentials_github.polimaster: Username=${{ github.actor }};Password=${{ secrets.GITHUB_TOKEN }}
 #      - name: Run tests
 #        run: dotnet test "$src.Tests"
       - name: Create the package
